@@ -182,7 +182,7 @@ Total forks: __{data['repository']['forks_count']} ⚡️__
                 commits_text = ""
         if not commits_text:
             return "tf"
-        text = f"""✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
+        text = f"""#Commit\n✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
 {commits_text}
 """
         if len(data["commits"]) > 10:
