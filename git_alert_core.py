@@ -133,7 +133,7 @@ Title : {data['issue']['title']}
         return "ok"
     if data.get("forkee"):
         fork_ = f"""
-#Fork\n🍴 New Forked by [{data['forkee']['name']}]({data['forkee']['svn_url']}) For [{data['repository']['name']]({data['repository']['html_url']})
+#Fork\n🍴 New Fork {data['forkee']['svn_url']} Forked from {data['repository']['html_url']}
 Total forks: __{data['repository']['forks_count']} ⚡️__
 """
         await msg_.edit(fork_, disable_web_page_preview=True)
