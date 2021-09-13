@@ -252,7 +252,7 @@ async def bot_(client, message):
         ),
     ]
     file = "https://i.makeagif.com/media/2-18-2016/M3yKm-.gif"
-    msg = f"**Hello** {message.from_user.mention}. **I Am Git Alert Bot.\nI Can Notify In Chat When My Hook Gets Triggred From Github.**"
+    msg = f"**Hello** {message.from_user.mention}.\n\n**I Am Git Alert Bot.\nI Can Notify In Chat When My Hook Gets Triggred From Github.**"
     await message.reply_animation(
         file, caption=msg, quote=True, reply_markup=InlineKeyboardMarkup([key_board])
     )
@@ -266,7 +266,7 @@ async def bot_(client, message):
         ),
     ]
     file = "https://i.makeagif.com/media/2-18-2016/M3yKm-.gif"
-    msg = f"**Hello** {message.from_user.mention}.\n\n**How to connect your repo to this bot?**\n1. Add this bot to your group, [Click Here](http://t.me/zYxDevsBot?startgroup=true)\n2. Go to your repo and set webhook as application/json, `https://galertbot.herokuapp.com/ghook/<group-log>`\nReplace `<group-log>` to your group log id"
+    msg = f"**Hello** {message.from_user.mention}.\n\n**How to connect your repo to this bot?**\n1. Add this bot to your group, [Click Here](http://t.me/zYxDevsBot?startgroup=true)\n2. Go to your repo and set webhook as application/json,\n\n`https://galertbot.herokuapp.com/ghook/<group-log>`\n\nReplace `<group-log>` to your group log id"
     await message.reply_animation(
         file, caption=msg, quote=True, reply_markup=InlineKeyboardMarkup([key_board])
     )
