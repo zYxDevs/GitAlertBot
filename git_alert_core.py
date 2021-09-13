@@ -133,10 +133,10 @@ Title : {data['issue']['title']}
         return "ok"
     if data.get("forkee"):
         fork_ = f"""
-#Fork\n🍴 {data['forkee']['svn_url']} Forked {data['repository']['html_url']}
+#Fork\n🍴 New Forked by [{data['forkee']['name']}]({data['forkee']['svn_url']}) For [{data['repository']['name']]({data['repository']['html_url']})
 Total forks: __{data['repository']['forks_count']} ⚡️__
 """
-        await msg_.edit(fork_, parse_mode="html", disable_web_page_preview=True)
+        await msg_.edit(fork_, disable_web_page_preview=True)
         return "ok"
     if data.get("ref_type"):
         response = f"#Other\nA new {data['ref_type']} on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
