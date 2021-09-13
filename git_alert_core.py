@@ -113,7 +113,7 @@ async def ghoo_k(chat):
         return f"Error : {e}"
     if data.get("hook"):
         web_hook_done = f"**Webhooked 🔗** [{data['repository']['name']}]({data['repository']['html_url']}) **By ✨** [{data['sender']['login']}]({data['sender']['html_url']})"
-        await msg_.edit(web_hook_done)
+        await msg_.edit(web_hook_done, disable_web_page_preview=True)
         return "ok"
     if data.get("issue"):
         if data.get("comment"):
@@ -122,37 +122,37 @@ async def ghoo_k(chat):
 `{data['comment']['body']}`
 [#{data['issue']['number']}]({data['comment']['html_url']})
 """
-            await msg_.edit(issue_comment)
+            await msg_.edit(issue_comment, disable_web_page_preview=True)
         else:
             issue_c = f"""
 **⚠️ New {data['action']} Issue :** `{data['repository']['name']}` 
 Title : {data['issue']['title']}
 {data['issue']['body'] or "No Description"}
 [{data['issue']['number']}]({data['issue']['html_url']})"""
-            await msg_.edit(issue_c)
+            await msg_.edit(issue_c, disable_web_page_preview=True)
         return "ok"
     if data.get("forkee"):
         fork_ = f"""
 🍴 {data['forkee']['svn_url']} Forked {data['repository']['html_url']}
 Total forks count is now: __{data['repository']['forks_count']} ⚡️__
 """
-        await msg_.edit(fork_)
+        await msg_.edit(fork_, disable_web_page_preview=True)
         return "ok"
     if data.get("ref_type"):
         response = f"A new {data['ref_type']} on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
-        await msg_.edit(response, parse_mode="html")
+        await msg_.edit(response, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("created"):
         response = f"Branch {data['ref'].split('/')[-1]} <b>{data['ref'].split('/')[-2]}</b> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
-        await msg_.edit(response, parse_mode="html")
+        await msg_.edit(response, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("deleted"):
         response = f"Branch {data['ref'].split('/')[-1]} <b>{data['ref'].split('/')[-2]}</b> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was deleted by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
-        await msg_.edit(response, parse_mode="html")
+        await msg_.edit(response, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("forced"):
         response = f"Branch {data['ref'].split('/')[-1]} <b>{data['ref'].split('/')[-2]}</b> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was forced by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
-        await msg_.edit(response, parse_mode="html")
+        await msg_.edit(response, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("pages"):
         text = f"<a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> wiki pages were updated by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!\n\n"
@@ -161,7 +161,7 @@ Total forks count is now: __{data['repository']['forks_count']} ⚡️__
             text += f"📝 <b>{escape(x['title'])}</b> ({x['action']})\n{summary}<a href='{x['html_url']}'>{x['page_name']}</a> - {x['sha'][:7]}"
             if len(data["pages"]) >= 2:
                 text += "\n=====================\n"
-            await msg_.edit(text, parse_mode="html")
+            await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("commits"):
         commits_text = ""
@@ -178,7 +178,7 @@ Total forks count is now: __{data['repository']['forks_count']} ⚡️__
                 text = f"""✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
 {commits_text}
 """
-                await msg_.edit(text, parse_mode="html")
+                await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
                 commits_text = ""
         if not commits_text:
             return "tf"
@@ -187,7 +187,7 @@ Total forks count is now: __{data['repository']['forks_count']} ⚡️__
 """
         if len(data["commits"]) > 10:
             text += f"\n\n<i>And {len(data['commits']) - 10} other commits</i>"
-        await msg_.edit(text, parse_mode="html")
+        await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("pull_request"):
         if data.get("comment"):
@@ -195,29 +195,29 @@ Total forks count is now: __{data['repository']['forks_count']} ⚡️__
 {escape(data['comment']['body'])}
 <a href='{data['comment']['html_url']}'>Pull request #{data['issue']['number']}</a>
 """
-            await msg_.edit(text, parse_mode="html")
+            await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
             return "ok"
         text = f"""❗  New {data['action']} pull request for <b>{escape(data['repository']['name'])}</b>
 <b>{escape(data['pull_request']['title'])}</b> ({data['pull_request']['state']})
 {escape(data['pull_request']['body'])}
 <a href='{data['pull_request']['html_url']}'>Pull request #{data['pull_request']['number']}</a>
 """
-        await msg_.edit(text, parse_mode="html")
+        await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("action"):
         if data.get("action") == "published" and data.get("release"):
             text = f"<a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> {data['action']} <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>!"
             text += f"\n\n<b>{data['release']['name']}</b> ({data['release']['tag_name']})\n{data['release']['body']}\n\n<a href='{data['release']['tarball_url']}'>Download tar</a> | <a href='{data['release']['zipball_url']}'>Download zip</a>"
-            await msg_.edit(text, parse_mode="html")
+            await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
             return "ok"
         if data.get("action") == "started":
             text = f"🌟 <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> gave a star to <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>!\n<b>Total StarGazers :</b> <i>{data['repository']['stargazers_count']} </i>"
-            await msg_.edit(text, parse_mode="html")
+            await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
             return "ok"
         if data.get("action") == "edited" and data.get("release"):
             text = f"<a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> {data['action']} <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>!"
             text += f"\n\n<b>{data['release']['name']}</b> ({data['release']['tag_name']})\n{data['release']['body']}\n\n<a href='{data['release']['tarball_url']}'>Download tar</a> | <a href='{data['release']['zipball_url']}'>Download zip</a>"
-            await msg_.edit(text, parse_mode="html")
+            await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
             return "ok"
     if data.get("context"):
         if data.get("state") == "pending":
@@ -231,6 +231,7 @@ Total forks count is now: __{data['repository']['forks_count']} ⚡️__
         await msg_.edit(
             f"{emo} <a href='{data['target_url']}'>{data['description']}</a> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>! \nLatest commit:\n<a href='{data['commit']['commit']['url']}'>{escape(data['commit']['commit']['message'])}</a>",
             parse_mode="html",
+            disable_web_page_preview=True,
         )
         return "ok"
     await msg_.delete()
