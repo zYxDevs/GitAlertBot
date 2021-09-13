@@ -33,7 +33,7 @@ chat = config.CHAT_ID
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - [FridayAssistant] - %(levelname)s - %(message)s",
+    format="%(asctime)s - [GitAlertBot] - %(levelname)s - %(message)s",
 )
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
 
@@ -112,20 +112,20 @@ async def ghoo_k(chat):
         logging.critical(f"Unable To Send Message To Chat. \nError : {e} \nApi is Exiting")
         return f"Error : {e}"
     if data.get("hook"):
-        web_hook_done = f"**Webhooked 🔗** [{data['repository']['name']}]({data['repository']['html_url']}) **By ✨** [{data['sender']['login']}]({data['sender']['html_url']})"
+        web_hook_done = f"#Connect\n**🔗 Connected to** [{data['repository']['name']}]({data['repository']['html_url']}) **\n✨ By** [{data['sender']['login']}]({data['sender']['html_url']})"
         await msg_.edit(web_hook_done, disable_web_page_preview=True)
         return "ok"
     if data.get("issue"):
         if data.get("comment"):
             issue_comment = f"""
-**💬 New Comment :** `{data['repository']['name']}` 
+**#Comment\n💬 New Comment :** `{data['repository']['name']}` 
 `{data['comment']['body']}`
 [#{data['issue']['number']}]({data['comment']['html_url']})
 """
             await msg_.edit(issue_comment, disable_web_page_preview=True)
         else:
             issue_c = f"""
-**⚠️ New {data['action']} Issue :** `{data['repository']['name']}` 
+**#Issue\n⚠️ New {data['action']} Issue :** `{data['repository']['name']}` 
 Title : {data['issue']['title']}
 {data['issue']['body'] or "No Description"}
 [{data['issue']['number']}]({data['issue']['html_url']})"""
@@ -133,29 +133,29 @@ Title : {data['issue']['title']}
         return "ok"
     if data.get("forkee"):
         fork_ = f"""
-🍴 {data['forkee']['svn_url']} Forked {data['repository']['html_url']}
-Total forks count is now: __{data['repository']['forks_count']} ⚡️__
+#Fork\n🍴 {data['forkee']['svn_url']} Forked {data['repository']['html_url']}
+Total forks: __{data['repository']['forks_count']} ⚡️__
 """
-        await msg_.edit(fork_, disable_web_page_preview=True)
+        await msg_.edit(fork_, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("ref_type"):
-        response = f"A new {data['ref_type']} on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
+        response = f"#Other\nA new {data['ref_type']} on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
         await msg_.edit(response, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("created"):
-        response = f"Branch {data['ref'].split('/')[-1]} <b>{data['ref'].split('/')[-2]}</b> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
+        response = f"#Branch\nBranch {data['ref'].split('/')[-1]} <b>{data['ref'].split('/')[-2]}</b> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
         await msg_.edit(response, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("deleted"):
-        response = f"Branch {data['ref'].split('/')[-1]} <b>{data['ref'].split('/')[-2]}</b> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was deleted by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
+        response = f"#Branch\nBranch {data['ref'].split('/')[-1]} <b>{data['ref'].split('/')[-2]}</b> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was deleted by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
         await msg_.edit(response, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("forced"):
-        response = f"Branch {data['ref'].split('/')[-1]} <b>{data['ref'].split('/')[-2]}</b> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was forced by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
+        response = f"#Branch\nBranch {data['ref'].split('/')[-1]} <b>{data['ref'].split('/')[-2]}</b> on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was forced by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
         await msg_.edit(response, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("pages"):
-        text = f"<a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> wiki pages were updated by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!\n\n"
+        text = f"#Pages\n<a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> wiki pages were updated by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!\n\n"
         for x in data["pages"]:
             summary = f"{x['summary']}\n" if x["summary"] else ""
             text += f"📝 <b>{escape(x['title'])}</b> ({x['action']})\n{summary}<a href='{x['html_url']}'>{x['page_name']}</a> - {x['sha'][:7]}"
@@ -175,7 +175,7 @@ Total forks count is now: __{data['repository']['forks_count']} ⚡️__
                 commit_msg = escape(commit["message"])
             commits_text += f"{commit_msg}\n<a href='{commit['url']}'>{commit['id'][:7]}</a> - {commit['author']['name']} {escape('<')}{commit['author']['email']}{escape('>')}\n\n"
             if len(commits_text) > 1000:
-                text = f"""✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
+                text = f"""#Commit\n✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
 {commits_text}
 """
                 await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
@@ -191,13 +191,13 @@ Total forks count is now: __{data['repository']['forks_count']} ⚡️__
         return "ok"
     if data.get("pull_request"):
         if data.get("comment"):
-            text = f"""❗ There is a new pull request for <b>{escape(data['repository']['name'])}</b> ({data['pull_request']['state']})
+            text = f"""#PRs\n❗ There is a new pull request for <b>{escape(data['repository']['name'])}</b> ({data['pull_request']['state']})
 {escape(data['comment']['body'])}
 <a href='{data['comment']['html_url']}'>Pull request #{data['issue']['number']}</a>
 """
             await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
             return "ok"
-        text = f"""❗  New {data['action']} pull request for <b>{escape(data['repository']['name'])}</b>
+        text = f"""#PRs\n❗  New {data['action']} pull request for <b>{escape(data['repository']['name'])}</b>
 <b>{escape(data['pull_request']['title'])}</b> ({data['pull_request']['state']})
 {escape(data['pull_request']['body'])}
 <a href='{data['pull_request']['html_url']}'>Pull request #{data['pull_request']['number']}</a>
@@ -244,22 +244,22 @@ if config.HEROKU_APP_NAME:
     scheduler.start()
 
 
-@gitbot.on_message(filters.command(["start", "help"]))
+@gitbot.on_message(filters.command(["start", "start@zYxDevsBot"]))
 async def bot_(client, message):
     key_board = [
         InlineKeyboardButton(
-            text="Source Code", url="https://github.com/zYxDevs/GitAlertBot"
+            text="Owner", url="https://t.me/zYxDx"
         ),
     ]
     file = "https://i.makeagif.com/media/2-18-2016/M3yKm-.gif"
-    msg = f"__Hello__ {message.from_user.mention}. __I Am A Simple Git ALert Bot. I Notify In Chat When My Hook Gets Triggred From Github. You Can Find My Source Code on Github.com__"
+    msg = f"**Hello** {message.from_user.mention}. **I Am Git Alert Bot. I Notify In Chat When My Hook Gets Triggred From Github.**"
     await message.reply_animation(
         file, caption=msg, quote=True, reply_markup=InlineKeyboardMarkup([key_board])
     )
 
 
 async def run():
-    logging.info("[Starting] [GitBot] - Bot & Server")
+    logging.info("[Starting] [GitAlertBot] - Bot & Server")
     await gitbot.start()
     gitbot.me = await gitbot.get_me()
     config_ = Config()
