@@ -1,4 +1,4 @@
-# ~~Yet Another~~ GitAlertBot
+# GitAlertBot
 
 ## Inspired From [@Pokurt's GitGram](https://github.com/pokurt/GitGram/)
 
@@ -6,8 +6,8 @@
 ### Local Host
 
 * Git Clone Repo :
-- For Telethon Version : `git clone https://github.com/DevsExpo/GitAlertBot -b telethon`
-- For Pyrogram Version : `git clone https://github.com/DevsExpo/GitAlertBot -b pyrogram`
+- For Telethon Version : `git clone https://github.com/zYxDevs/GitAlertBot -b telethon`
+- For Pyrogram Version : `git clone https://github.com/zYxDevs/GitAlertBot -b pyrogram`
 * Make `local.env` File With the Values As Shown Below : 
 ```
 API_ID=12222
