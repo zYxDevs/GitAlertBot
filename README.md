@@ -30,7 +30,7 @@ PORT=8000
 * Happy Gitting :)
 #### Telethon Version 
 
-[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/DevsExpo/GitAlertBot/blob/telethon)
+[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/zYxDevs/GitAlertBot/blob/telethon)
 
 #### Pyrogram
-[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/DevsExpo/GitAlertBot/blob/pyrogram)
+[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/zYxDevs/GitAlertBot/blob/pyrogram)
