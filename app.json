@@ -17,6 +17,10 @@
       "description": "Your APi Hash From Telegram",
       "value": ""
     },
+    "HEROKU_APP_NAME": {
+      "description": "Your Heroku AppName",
+      "value": ""
+    },
     "API_ID": {
       "description": "Your Api ID From Telegram.",
       "value": "5"
