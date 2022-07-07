@@ -3,5 +3,5 @@ aiohttp
 tgcrypto
 python-dotenv
 hypercorn
-pyrogram
+pyrogram==1.*
 apscheduler
